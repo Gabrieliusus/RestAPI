@@ -18,6 +18,4 @@ namespace MyFirstWebApplication.Controllers
             return Ok(sum.ZahlA + sum.ZahlB);
         }
     }
-
-
 }

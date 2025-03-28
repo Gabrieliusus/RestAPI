@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Beispiel</title>
+    <script src="RestTest.js"></script>
+</head>
+<style>
+    .student {
+        border: 1px solid black;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+    <h1>API Test</h1>
+
+    <div>
+        <h2>Increment</h2>
+        <input type="number" id="incrementNumber" placeholder="Gib eine Zahl ein" />
+        <button onclick="incrementNumber()">Increment</button>
+        <p id="incrementResult"></p>
+    </div>
+
+    <div>
+        <h2>Summe berechnen</h2>
+        <input type="number" id="zahlA" placeholder="Zahl A" />
+        <input type="number" id="zahlB" placeholder="Zahl B" />
+        <button onclick="calculateSum()">Berechne Summe</button>
+        <p id="sumResult"></p>
+    </div>
+
+    <div>
+        <h2>Schüler hinzufügen</h2>
+        <input type="date" id="birthdate" placeholder="DD.MM.YYYY" />
+        <input type="text" id="gender" placeholder="männlich/weiblich" />
+        <input type="text" id="class" placeholder="3aWI" />
+        <button onclick="addStudent()">Schüler hinzufügen</button>
+        <p id="responseAdded"></p>
+    </div>
+    <div>
+        <h2>Andere Methoden</h2>
+        <button onclick="studentAll()">Alle Schüler aufrufen</button>
+        <div id="content"></div>
+        <button onclick="studentAge()">Durchschnittsalter berechnen</button>
+        <p id="responseAge"></p>
+        <button onclick="studentGender()">Alle Geschlechter aufrufen</button>
+        <p id="responseAllGender"></p>
+    </div>
+</body>
+</html>

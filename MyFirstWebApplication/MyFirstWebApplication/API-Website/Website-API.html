@@ -2,67 +2,114 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summen Rechner</title>
-</head>
-<body>
-    <h1>Summen Rechner</h1>
-
-    <label for="zahl1">Zahl 1:</label>
-    <input type="number" id="zahl1" />
-
-    <label for="zahl2">Zahl 2:</label>
-    <input type="number" id="zahl2" />
-
-    <button onclick="berechneSumme()">Berechnen</button>
-
-    <h2>Ergebnis: <span id="ergebnis">Noch keine Berechnung</span></h2>
-
+    <title>Schulverwaltung (Einfach)</title>
     <script>
-        async function berechneSumme() {
-            let zahl1 = document.getElementById("zahl1").value;
-            let zahl2 = document.getElementById("zahl2").value;
-            let ergebnisElement = document.getElementById("ergebnis");
+        const baseUrl = "https://localhost:7285";
 
-            if (zahl1.trim() === "" || zahl2.trim() === "") {
-                ergebnisElement.textContent = "Bitte beide Zahlen eingeben!";
-                return;
-            }
+        function addSchueler() {
+            const geburtstag = document.getElementById("geburtstag").value;
+            const geschlecht = document.getElementById("geschlecht").value;
+            const klasse = document.getElementById("klasse").value;
 
-            let zahlA = parseInt(zahl1);
-            let zahlB = parseInt(zahl2);
+            const schueler = {
+                geburtstag: geburtstag,
+                geschlecht: geschlecht,
+                klasse: klasse
+            };
 
-            if (isNaN(zahlA) || isNaN(zahlB)) 
-            {
-                ergebnisElement.textContent = "Ungültige Eingabe!";
-                return;
-            }
+            fetch(baseUrl + "/Schul/AddSchueler", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(schueler)
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("ausgabe").textContent = "Schüler hinzugefügt!";
+            });
+        }
 
-            let daten = { ZahlA: zahlA, ZahlB: zahlB };
-
-            try 
-            {
-                let response = await fetch("http://localhost:7206/api/Numbers/Sum", 
-                {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(daten),
-                });
-
-                if (!response.ok) 
-                {
-                    throw new Error(`Server-Fehler: ${response.status}`);
+        function ladeAlleSchueler() {
+            fetch(baseUrl + "/Schul/AlleSchueler")
+            .then(res => res.json())
+            .then(data => {
+                let text = "";
+                for (let i = 0; i < data.length; i++) {
+                    text += data[i].klasse + " | " + data[i].geschlecht + " | " + data[i].geburtstag + "\n";
                 }
+                document.getElementById("ausgabe").textContent = text;
+            });
+        }
 
-                let result = await response.json();
+        function zeigeAlter() {
+            fetch(baseUrl + "/Schul/Durchschnittsalter")
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("ausgabe").textContent = "Ø Alter: " + data.durchschnittsalter;
+            });
+        }
 
-                if (!result || typeof result.sum === "undefined") {
-                    throw new Error("Ungültige API-Antwort");
-                }
+        function zeigeGeschlechter() {
+            fetch(baseUrl + "/Schul/Geschlecht")
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("ausgabe").textContent = data.verteilung;
+            });
+        }
 
-                ergebnisElement.textContent = result.sum;
-            } 
+        function summeBerechnen() {
+            const a = parseInt(document.getElementById("zahlA").value);
+            const b = parseInt(document.getElementById("zahlB").value);
+            const zahlen = { zahlA: a, zahlB: b };
+
+            fetch(baseUrl + "/Numbers/Sum", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(zahlen)
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("ausgabe").textContent = "Summe: " + data;
+            });
+        }
+
+        function inkrement() {
+            const zahl = parseInt(document.getElementById("inkZahl").value);
+
+            fetch(baseUrl + "/Numbers/increment", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(zahl)
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("ausgabe").textContent = "Erhöht: " + data;
+            });
         }
     </script>
+</head>
+<body>
+    <h1>Schule einfach</h1>
+
+    <h2>Schüler hinzufügen</h2>
+    <input id="geburtstag" type="date">
+    <input id="geschlecht" placeholder="männlich/weiblich">
+    <input id="klasse" placeholder="z. B. 8A">
+    <button onclick="addSchueler()">Hinzufügen</button>
+
+    <h2>Aktionen</h2>
+    <button onclick="ladeAlleSchueler()">Alle Schüler</button>
+    <button onclick="zeigeAlter()">Durchschnittsalter</button>
+    <button onclick="zeigeGeschlechter()">Geschlechter</button>
+
+    <h2>Rechnen</h2>
+    <input id="zahlA" type="number" placeholder="Zahl A">
+    <input id="zahlB" type="number" placeholder="Zahl B">
+    <button onclick="summeBerechnen()">Summe</button><br><br>
+
+    <input id="inkZahl" type="number" placeholder="Zahl für +1">
+    <button onclick="inkrement()">+1</button>
+
+    <h2>Ergebnis</h2>
+    <pre id="ausgabe">...</pre>
 </body>
 </html>

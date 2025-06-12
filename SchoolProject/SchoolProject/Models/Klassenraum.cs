@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace SchoolProject.Objects
 {
@@ -11,6 +8,9 @@ namespace SchoolProject.Objects
         public float RaumInQm { get; set; }
         public int Plaetze { get; set; }
         public bool HasCynap { get; set; }
+
+        [Key]
+        public int Id { get; set; }
 
         public List<Schueler> SchuelerImRaum = new List<Schueler>();
         public Klassenraum(float raumInQm, int plaetze, bool hasCynap)

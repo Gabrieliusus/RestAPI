@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using SchoolProject.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -10,11 +13,23 @@ builder.Services.AddCors(options =>
               .AllowCredentials();
     });
 });
-builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.IncludeFields = true;
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<SchoolContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
+
+
+app.UseCors("AllowLocalhost");
+
 
 app.UseCors("AllowLocalhost");
 
@@ -30,7 +45,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.IncludeFields = true;
-});

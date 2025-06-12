@@ -28,6 +28,7 @@ namespace SchoolProject
             }
         }
         public DateTime Geburtstag { get; set; }
+        public string Name { get; set; }
         public Person(DateTime geburtstag, string geschlecht)
         {
             Geburtstag = geburtstag;

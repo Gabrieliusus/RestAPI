@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using SchoolProject;
 public class Schueler : Person
 {
-
+    [Key]
+    public int Id { get; set; }
     public string Klasse { get; set; }
     public List<string> klassen = new List<string>();
     public Schueler() : base(DateTime.MinValue, "unbekannt") { }

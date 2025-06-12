@@ -18,4 +18,4 @@ namespace SchoolProject.Controllers
             return Ok(sum.ZahlA + sum.ZahlB);
         }
     }
-}
+}   

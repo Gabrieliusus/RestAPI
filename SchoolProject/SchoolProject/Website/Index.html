@@ -2,51 +2,101 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Beispiel</title>
-    <script src="RestTest.js"></script>
+    <title>Schulverwaltung</title>
+    <script defer src="school.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 40px auto;
+            max-width: 900px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        button {
+            background-color: #0078D4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005ea2;
+        }
+        .entry {
+            background-color: #f0f4f8;
+            border: 1px solid #d0dbe5;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+        .antwort, .liste {
+            margin-top: 10px;
+        }
+    </style>
 </head>
-<style>
-    .student {
-        border: 1px solid black;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-</style>
 <body>
-    <h1>API Test</h1>
+    <h1>Schulverwaltung</h1>
 
-    <div>
-        <h2>Increment</h2>
-        <input type="number" id="incrementNumber" placeholder="Gib eine Zahl ein" />
-        <button onclick="incrementNumber()">Increment</button>
-        <p id="incrementResult"></p>
-    </div>
+    <section>
+        <h2>👩‍🎓 Schüler hinzufügen</h2>
+        <input id="schueler-name" placeholder="Name">
+        <input id="schueler-klasse" placeholder="Klasse">
+        <input id="schueler-geburtstag" type="date">
+        <input id="schueler-geschlecht" placeholder="Geschlecht">
+        <button onclick="addSchueler()">Hinzufügen</button>
+        <div id="schueler-antwort" class="antwort"></div>
+    </section>
 
-    <div>
-        <h2>Summe berechnen</h2>
-        <input type="number" id="zahlA" placeholder="Zahl A" />
-        <input type="number" id="zahlB" placeholder="Zahl B" />
-        <button onclick="calculateSum()">Berechne Summe</button>
-        <p id="sumResult"></p>
-    </div>
+    <section>
+        <h2>👨‍🏫 Lehrer hinzufügen</h2>
+        <input id="lehrer-name" placeholder="Name">
+        <input id="lehrer-fach" placeholder="Fachgebiet">
+        <input id="lehrer-geburtstag" type="date">
+        <input id="lehrer-geschlecht" placeholder="Geschlecht">
+        <button onclick="addLehrer()">Hinzufügen</button>
+        <div id="lehrer-antwort" class="antwort"></div>
+    </section>
 
-    <div>
-        <h2>Schüler hinzufügen</h2>
-        <input type="date" id="birthdate" placeholder="DD.MM.YYYY" />
-        <input type="text" id="gender" placeholder="männlich/weiblich" />
-        <input type="text" id="class" placeholder="3aWI" />
-        <button onclick="addStudent()">Schüler hinzufügen</button>
-        <p id="responseAdded"></p>
-    </div>
-    <div>
-        <h2>Andere Methoden</h2>
-        <button onclick="studentAll()">Alle Schüler aufrufen</button>
-        <div id="content"></div>
-        <button onclick="studentAge()">Durchschnittsalter berechnen</button>
-        <p id="responseAge"></p>
-        <button onclick="studentGender()">Alle Geschlechter aufrufen</button>
-        <p id="responseAllGender"></p>
-    </div>
+    <section>
+        <h2>🏫 Klasse hinzufügen</h2>
+        <input id="klasse-name" placeholder="Klassenname">
+        <button onclick="addKlasse()">Hinzufügen</button>
+        <div id="klasse-antwort" class="antwort"></div>
+    </section>
+
+    <section>
+        <h2>📚 Klassen anzeigen</h2>
+        <button onclick="getKlassen()">Alle Klassen laden</button>
+        <div id="klassen-liste" class="liste"></div>
+    </section>
+
+    <section>
+        <h2>📋 Alle Schüler anzeigen</h2>
+        <button onclick="getSchueler()">Alle Schüler laden</button>
+        <div id="schueler-liste" class="liste"></div>
+    </section>
+
+    <section>
+        <h2>📋 Alle Lehrer anzeigen</h2>
+        <button onclick="getLehrer()">Alle Lehrer laden</button>
+        <div id="lehrer-liste" class="liste"></div>
+    </section>
 </body>
 </html>

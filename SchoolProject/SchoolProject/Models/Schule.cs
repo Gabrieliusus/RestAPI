@@ -17,7 +17,7 @@ namespace SchoolProject.Objects
 
             SchuelerList.Add(schueler);
         }
-        public void AddKlassenraumToSchule(Klassenraum klassenraum)
+        public void AddKlassenraumToSchule(Klassenraum klassenraum) 
         {
             KlassenraumList.Add(klassenraum);
         }

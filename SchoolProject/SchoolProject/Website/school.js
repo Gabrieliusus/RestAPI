@@ -8,7 +8,7 @@ function addSchueler() {
         geschlecht: document.getElementById("schueler-geschlecht").value,
     };
 
-    fetch(`${baseUrl}/Schule/Schueler`, {
+    fetch(`${baseUrl}/School/Schueler`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(schueler)
@@ -25,7 +25,7 @@ function addLehrer() {
         geschlecht: document.getElementById("lehrer-geschlecht").value,
     };
 
-    fetch(`${baseUrl}/Schule/Lehrer`, {
+    fetch(`${baseUrl}/School/Lehrer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(lehrer)
@@ -52,10 +52,13 @@ function getSchueler() {
     fetch(`${baseUrl}/Schule/Schueler`)
         .then(res => res.json())
         .then(data => {
-            const list = data.map(s => `<div class='entry'>${s.name} (${s.klasse}) - ${s.geschlecht}</div>`).join("");
+            const list = data.map(s =>
+                `<div class='entry'>${s.name} (${s.klasse}) - ${s.geschlecht}</div>`
+            ).join("");
             document.getElementById("schueler-liste").innerHTML = list;
         });
 }
+
 
 function getLehrer() {
     fetch(`${baseUrl}/Schule/Lehrer`)

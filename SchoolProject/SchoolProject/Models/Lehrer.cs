@@ -5,6 +5,8 @@ namespace SchoolProject.Models
 {
     public class Lehrer : Person
     {
+        public int Id { get; set; }
+
         public string Fachgebiet { get; set; }
 
         public Lehrer() : base(DateTime.MinValue, "unbekannt") { }

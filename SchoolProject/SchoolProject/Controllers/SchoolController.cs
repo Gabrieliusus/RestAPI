@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data;
 using SchoolProject.Models;
-using SchoolProject.Objects;
 using SchoolProject.Objects;
 
 namespace MyFirstWebApplication.Controllers
